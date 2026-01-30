@@ -80,7 +80,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist - Commented out to allow redistribution via Git File Bridge
 
 # Gatsby files
 .cache/
