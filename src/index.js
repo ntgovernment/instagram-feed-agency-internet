@@ -176,7 +176,7 @@ class InstagramFeed {
 
         return `
         <div class="instagram-card">
-          <div class="instagram-card__media">
+          <div class="instagram-card__media" style="background-image: url('${imageUrl}')">
             <img src="${imageUrl}" alt="${this.escapeHtml(title)}" />
           </div>
           <div class="instagram-card__header">

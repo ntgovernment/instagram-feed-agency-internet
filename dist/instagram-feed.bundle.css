@@ -40,7 +40,7 @@
 
 /* Blurred background layer */
 .instagram-card__media::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -268,3 +268,6 @@
     align-self: flex-start;
   }
 }
+
+
+/*# sourceMappingURL=instagram-feed.bundle.css.map*/
