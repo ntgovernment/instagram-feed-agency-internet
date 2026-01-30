@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Instagram Feed - Agency Internet</title><script defer="defer" src="instagram-feed.bundle.js"></script><link href="instagram-feed.bundle.css" rel="stylesheet"></head><body><div id="instagram-feed"></div><script>// Example data for development
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.InstagramFeed) {
+                const sampleData = [
+                    {
+                        image: 'https://via.placeholder.com/300x300/E1306C/ffffff?text=Instagram+Post+1',
+                        caption: 'Beautiful day at the agency! #AgencyLife #WebDesign'
+                    },
+                    {
+                        image: 'https://via.placeholder.com/300x300/405DE6/ffffff?text=Instagram+Post+2',
+                        caption: 'Working on amazing projects #Development #Code'
+                    },
+                    {
+                        image: 'https://via.placeholder.com/300x300/5B51D8/ffffff?text=Instagram+Post+3',
+                        caption: 'Team collaboration at its finest! #Teamwork'
+                    },
+                    {
+                        image: 'https://via.placeholder.com/300x300/C13584/ffffff?text=Instagram+Post+4',
+                        caption: 'Creative solutions for our clients #Innovation'
+                    },
+                    {
+                        image: 'https://via.placeholder.com/300x300/833AB4/ffffff?text=Instagram+Post+5',
+                        caption: 'Latest project launch #Success #Achievement'
+                    },
+                    {
+                        image: 'https://via.placeholder.com/300x300/FD1D1D/ffffff?text=Instagram+Post+6',
+                        caption: 'Behind the scenes at the office #BTS #WorkLife'
+                    }
+                ];
+                
+                window.instagramFeed = new InstagramFeed({
+                    container: document.getElementById('instagram-feed'),
+                    feedData: sampleData
+                });
+            }
+        });</script></body></html>
