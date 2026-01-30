@@ -377,7 +377,7 @@ class InstagramFeed {
         const permalink = this.escapeHtml(item.permalink);
 
         return `
-        <div class="instagram-card">
+        <div class="instagram-card" role="button" tabindex="0" data-post-id="${this.escapeHtml(item.id)}">
           <div class="instagram-card__media" style="background-image: url('${imageUrl}')">
             <img src="${imageUrl}" alt="${this.escapeHtml(title)}" />
           </div>
@@ -399,7 +399,7 @@ class InstagramFeed {
             <div class="instagram-card__date">${this.escapeHtml(date)}</div>
           </div>
           <div class="instagram-card__body">
-            <h3 class="instagram-card__title" role="button" tabindex="0" data-post-id="${this.escapeHtml(item.id)}">${this.escapeHtml(title)}</h3>
+            <h3 class="instagram-card__title">${this.escapeHtml(title)}</h3>
             <p class="instagram-card__description">${this.escapeHtml(description)}</p>
           </div>
         </div>
@@ -418,25 +418,25 @@ class InstagramFeed {
     // Store reference to triggering element for focus return
     this.lastFocusedElement = null;
 
-    // Event delegation for title clicks
+    // Event delegation for card clicks
     this.container.addEventListener("click", (e) => {
-      const title = e.target.closest(".instagram-card__title");
-      if (title) {
-        this.lastFocusedElement = title;
-        const postId = title.getAttribute("data-post-id");
+      const card = e.target.closest(".instagram-card");
+      if (card) {
+        this.lastFocusedElement = card;
+        const postId = card.getAttribute("data-post-id");
         if (postId) {
           this.showPostModal(postId);
         }
       }
     });
 
-    // Keyboard accessibility for titles
+    // Keyboard accessibility for cards
     this.container.addEventListener("keydown", (e) => {
-      const title = e.target.closest(".instagram-card__title");
-      if (title && (e.key === "Enter" || e.key === " ")) {
+      const card = e.target.closest(".instagram-card");
+      if (card && (e.key === "Enter" || e.key === " ")) {
         e.preventDefault();
-        this.lastFocusedElement = title;
-        const postId = title.getAttribute("data-post-id");
+        this.lastFocusedElement = card;
+        const postId = card.getAttribute("data-post-id");
         if (postId) {
           this.showPostModal(postId);
         }
@@ -450,7 +450,7 @@ class InstagramFeed {
         if (e.key !== "Tab") return;
 
         const focusableElements = modal.querySelectorAll(
-          'button:not([disabled]), a[href]:not([disabled])'
+          "button:not([disabled]), a[href]:not([disabled])",
         );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
@@ -527,7 +527,7 @@ class InstagramFeed {
     // Show modal using Bootstrap's jQuery plugin
     if (typeof $ !== "undefined" && $.fn.modal) {
       $(modal).modal("show");
-      
+
       // Set initial focus to close button when modal is shown
       $(modal).on("shown.bs.modal", () => {
         const closeButton = document.getElementById("modal-close-button");
