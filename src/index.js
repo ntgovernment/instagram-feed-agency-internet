@@ -153,8 +153,8 @@ class InstagramFeed {
     // Normalize line endings (convert \r\n to \n)
     cleaned = cleaned.replace(/\r\n/g, "\n");
 
-    // Check if starts with non-alphabetic character (e.g., quote)
-    const startsWithNonAlpha = /^[^a-zA-Z]/.test(cleaned);
+    // Check if starts with non-alphanumeric character (e.g., quote, emoji)
+    const startsWithNonAlpha = /^[^a-zA-Z0-9]/.test(cleaned);
 
     // Remove leading non-alphanumeric characters
     cleaned = cleaned.replace(/^[^a-zA-Z0-9]+/, "");
@@ -204,8 +204,8 @@ class InstagramFeed {
     // Normalize line endings (convert \r\n to \n)
     cleaned = cleaned.replace(/\r\n/g, "\n");
 
-    // Check if starts with non-alphabetic character (before removing leading chars)
-    const startsWithNonAlpha = /^[^a-zA-Z]/.test(cleaned);
+    // Check if starts with non-alphanumeric character (before removing leading chars)
+    const startsWithNonAlpha = /^[^a-zA-Z0-9]/.test(cleaned);
 
     // Remove leading non-alphanumeric characters
     const originalCleaned = cleaned.replace(/^[^a-zA-Z0-9]+/, "");
