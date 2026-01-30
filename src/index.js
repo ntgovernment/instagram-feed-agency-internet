@@ -163,26 +163,43 @@ class InstagramFeed {
 
     if (startsWithNonAlpha) {
       // For quoted or special text, extract only first sentence
-      const punctuationMatch = cleaned.match(/[.!?]/);
-      if (punctuationMatch && punctuationMatch.index > 0) {
-        endIndex = punctuationMatch.index + 1;
+      const periodIndex = cleaned.indexOf(".");
+      const exclamationIndex = cleaned.indexOf("!");
+      const questionIndex = cleaned.indexOf("?");
+
+      // Find first valid punctuation mark
+      const validIndices = [
+        periodIndex,
+        exclamationIndex,
+        questionIndex,
+      ].filter((idx) => idx > 0);
+
+      if (validIndices.length > 0) {
+        endIndex = Math.min(...validIndices);
       }
     } else {
-      // For normal text, check for double newline first
+      // For normal text, find first terminator (punctuation or double newline)
+      const periodIndex = cleaned.indexOf(".");
+      const exclamationIndex = cleaned.indexOf("!");
+      const questionIndex = cleaned.indexOf("?");
       const doubleNewlineIndex = cleaned.indexOf("\n\n");
-      if (doubleNewlineIndex > 0) {
-        endIndex = doubleNewlineIndex;
+
+      // Collect all valid terminators
+      const validIndices = [
+        periodIndex,
+        exclamationIndex,
+        questionIndex,
+        doubleNewlineIndex,
+      ].filter((idx) => idx > 0);
+
+      if (validIndices.length > 0) {
+        // Use the first terminator found
+        endIndex = Math.min(...validIndices);
       } else {
-        // Find first sentence ending punctuation
-        const punctuationMatch = cleaned.match(/[.!?]/);
-        if (punctuationMatch && punctuationMatch.index > 0) {
-          endIndex = punctuationMatch.index + 1;
-        } else {
-          // Fallback to first line
-          const firstNewline = cleaned.indexOf("\n");
-          if (firstNewline > 0) {
-            endIndex = firstNewline;
-          }
+        // Fallback to first line
+        const firstNewline = cleaned.indexOf("\n");
+        if (firstNewline > 0) {
+          endIndex = firstNewline;
         }
       }
     }
@@ -214,32 +231,51 @@ class InstagramFeed {
 
     if (startsWithNonAlpha) {
       // For quoted text, title is just first sentence
-      const punctuationMatch = originalCleaned.match(/[.!?]/);
-      if (punctuationMatch && punctuationMatch.index > 0) {
-        titleEndIndex = punctuationMatch.index + 1;
+      const periodIndex = originalCleaned.indexOf(".");
+      const exclamationIndex = originalCleaned.indexOf("!");
+      const questionIndex = originalCleaned.indexOf("?");
+
+      // Find first valid punctuation mark
+      const validIndices = [
+        periodIndex,
+        exclamationIndex,
+        questionIndex,
+      ].filter((idx) => idx > 0);
+
+      if (validIndices.length > 0) {
+        titleEndIndex = Math.min(...validIndices) + 1;
         cleaned = originalCleaned.substring(titleEndIndex).trim();
       } else {
         return "";
       }
     } else {
-      // For normal text, check for double newline first
+      // For normal text, find first terminator (punctuation or double newline)
+      const periodIndex = originalCleaned.indexOf(".");
+      const exclamationIndex = originalCleaned.indexOf("!");
+      const questionIndex = originalCleaned.indexOf("?");
       const doubleNewlineIndex = originalCleaned.indexOf("\n\n");
-      if (doubleNewlineIndex > 0) {
-        titleEndIndex = doubleNewlineIndex;
-        cleaned = originalCleaned.substring(titleEndIndex + 2).trim();
+
+      // Collect all valid terminators
+      const validIndices = [
+        periodIndex,
+        exclamationIndex,
+        questionIndex,
+        doubleNewlineIndex,
+      ].filter((idx) => idx > 0);
+
+      if (validIndices.length > 0) {
+        // Use the first terminator found
+        titleEndIndex = Math.min(...validIndices);
+        // Skip past the terminator (and extra newline if double newline)
+        const skipLength = titleEndIndex === doubleNewlineIndex ? 2 : 1;
+        cleaned = originalCleaned.substring(titleEndIndex + skipLength).trim();
       } else {
-        const punctuationMatch = originalCleaned.match(/[.!?]/);
-        if (punctuationMatch && punctuationMatch.index > 0) {
-          titleEndIndex = punctuationMatch.index + 1;
-          cleaned = originalCleaned.substring(titleEndIndex).trim();
+        const firstNewline = originalCleaned.indexOf("\n");
+        if (firstNewline > 0) {
+          titleEndIndex = firstNewline;
+          cleaned = originalCleaned.substring(titleEndIndex + 1).trim();
         } else {
-          const firstNewline = originalCleaned.indexOf("\n");
-          if (firstNewline > 0) {
-            titleEndIndex = firstNewline;
-            cleaned = originalCleaned.substring(titleEndIndex + 1).trim();
-          } else {
-            return "";
-          }
+          return "";
         }
       }
     }
