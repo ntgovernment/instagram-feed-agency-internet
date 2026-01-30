@@ -415,8 +415,8 @@ class InstagramFeed {
             </div>
             <div class="instagram-modal__footer">
               <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="modal-instagram-link">
+                <i class="fab fa-instagram"></i>
                 View on Instagram
-                <i class="fas fa-external-link-alt"></i>
               </a>
             </div>
           </div>

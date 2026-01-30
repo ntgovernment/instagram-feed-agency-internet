@@ -446,8 +446,8 @@
 }
 
 .instagram-modal__date {
-  color: var(--dpsc-text-light, #8e8e8e);
-  font-size: 14px;
+  color: var(--dpsc-text-dark, #1f1e27);
+  font-size: 16px;
   font-family: var(
     --font-family-base,
     Lato,
@@ -457,6 +457,8 @@
     Roboto,
     sans-serif
   );
+  font-weight: 400;
+  line-height: 24px;
   margin-left: auto;
 }
 
@@ -502,9 +504,13 @@
 
 .instagram-modal__footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   padding: var(--spacing-md, 16px) var(--spacing-lg, 24px);
   border-top: 1px solid var(--dpsc-border, #d3d3d7);
+}
+
+.instagram-modal__footer .btn i {
+  color: inherit;
 }
 
 @media (max-width: 768px) {
