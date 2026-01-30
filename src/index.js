@@ -55,8 +55,8 @@ class InstagramFeed {
         data = await response.json();
       }
 
-      // Filter for images only
-      this.feedData = data.filter((post) => post.media_type === "IMAGE");
+      // Store all feed data
+      this.feedData = data;
     } catch (error) {
       console.error("Instagram Feed: Error fetching data", error);
       this.feedData = [];
@@ -75,48 +75,200 @@ class InstagramFeed {
     return text ? String(text).replace(/[&<>"']/g, (m) => map[m]) : "";
   }
 
+  // Helper method to remove all emojis and special characters
+  removeEmojis(text) {
+    if (!text) return "";
+    return text
+      .replace(
+        /[\u{1F600}-\u{1F64F}]/gu, // Emoticons
+        "",
+      )
+      .replace(
+        /[\u{1F300}-\u{1F5FF}]/gu, // Misc Symbols and Pictographs
+        "",
+      )
+      .replace(
+        /[\u{1F680}-\u{1F6FF}]/gu, // Transport and Map
+        "",
+      )
+      .replace(
+        /[\u{1F1E0}-\u{1F1FF}]/gu, // Flags
+        "",
+      )
+      .replace(
+        /[\u{2600}-\u{26FF}]/gu, // Misc symbols
+        "",
+      )
+      .replace(
+        /[\u{2700}-\u{27BF}]/gu, // Dingbats
+        "",
+      )
+      .replace(
+        /[\u{1F900}-\u{1F9FF}]/gu, // Supplemental Symbols and Pictographs
+        "",
+      )
+      .replace(
+        /[\u{1FA00}-\u{1FA6F}]/gu, // Chess Symbols
+        "",
+      )
+      .replace(
+        /[\u{1FA70}-\u{1FAFF}]/gu, // Symbols and Pictographs Extended-A
+        "",
+      )
+      .replace(
+        /[\u{2300}-\u{23FF}]/gu, // Miscellaneous Technical (includes ⏰)
+        "",
+      )
+      .replace(
+        /[\u{2B00}-\u{2BFF}]/gu, // Miscellaneous Symbols and Arrows (includes ⭐)
+        "",
+      )
+      .replace(
+        /[\u{FE00}-\u{FE0F}]/gu, // Variation Selectors
+        "",
+      )
+      .replace(
+        /[\u{200D}]/gu, // Zero Width Joiner
+        "",
+      )
+      .replace(
+        /[\u{20E3}]/gu, // Combining Enclosing Keycap
+        "",
+      )
+      .replace(
+        /[\u{E0020}-\u{E007F}]/gu, // Tags
+        "",
+      )
+      .replace(/[ \t]+/g, " ") // Replace multiple spaces/tabs (not newlines) with single space
+      .trim();
+  }
+
   // Extract title from caption (first line or sentence)
   extractTitle(caption) {
     if (!caption) return "Instagram Post";
 
-    // Remove emojis and clean the caption
-    const cleaned = caption
-      .replace(
-        /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
-        "",
-      )
-      .trim();
+    // Remove emojis comprehensively
+    let cleaned = this.removeEmojis(caption);
 
-    // Get first line or first sentence
-    const firstLine = cleaned.split("\n")[0];
-    const firstSentence = firstLine.split(/[.!?]/)[0];
+    // Normalize line endings (convert \r\n to \n)
+    cleaned = cleaned.replace(/\r\n/g, "\n");
 
-    // Use the shorter one, truncate if too long
-    const title =
-      firstSentence.length < firstLine.length ? firstSentence : firstLine;
-    return title.length > 80 ? title.substring(0, 77) + "..." : title;
+    // Check if starts with non-alphabetic character (e.g., quote)
+    const startsWithNonAlpha = /^[^a-zA-Z]/.test(cleaned);
+
+    // Remove leading non-alphanumeric characters
+    cleaned = cleaned.replace(/^[^a-zA-Z0-9]+/, "");
+
+    let endIndex = cleaned.length;
+
+    if (startsWithNonAlpha) {
+      // For quoted or special text, extract only first sentence
+      const punctuationMatch = cleaned.match(/[.!?]/);
+      if (punctuationMatch && punctuationMatch.index > 0) {
+        endIndex = punctuationMatch.index + 1;
+      }
+    } else {
+      // For normal text, check for double newline first
+      const doubleNewlineIndex = cleaned.indexOf("\n\n");
+      if (doubleNewlineIndex > 0) {
+        endIndex = doubleNewlineIndex;
+      } else {
+        // Find first sentence ending punctuation
+        const punctuationMatch = cleaned.match(/[.!?]/);
+        if (punctuationMatch && punctuationMatch.index > 0) {
+          endIndex = punctuationMatch.index + 1;
+        } else {
+          // Fallback to first line
+          const firstNewline = cleaned.indexOf("\n");
+          if (firstNewline > 0) {
+            endIndex = firstNewline;
+          }
+        }
+      }
+    }
+
+    // Extract title
+    let title = cleaned.substring(0, endIndex).trim();
+
+    // Remove trailing punctuation and whitespace
+    return title.replace(/[.,;:!?]+\s*$/, "").trim();
   }
 
   // Truncate text to specified length
   truncateText(text, maxLength = 150) {
     if (!text) return "";
 
-    // Remove emojis
-    const cleaned = text
-      .replace(
-        /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
-        "",
-      )
-      .trim();
+    // Remove emojis comprehensively
+    let cleaned = this.removeEmojis(text);
 
-    if (cleaned.length <= maxLength) return cleaned;
+    // Normalize line endings (convert \r\n to \n)
+    cleaned = cleaned.replace(/\r\n/g, "\n");
 
-    // Truncate at word boundary
+    // Check if starts with non-alphabetic character (before removing leading chars)
+    const startsWithNonAlpha = /^[^a-zA-Z]/.test(cleaned);
+
+    // Remove leading non-alphanumeric characters
+    const originalCleaned = cleaned.replace(/^[^a-zA-Z0-9]+/, "");
+
+    let titleEndIndex = originalCleaned.length;
+
+    if (startsWithNonAlpha) {
+      // For quoted text, title is just first sentence
+      const punctuationMatch = originalCleaned.match(/[.!?]/);
+      if (punctuationMatch && punctuationMatch.index > 0) {
+        titleEndIndex = punctuationMatch.index + 1;
+        cleaned = originalCleaned.substring(titleEndIndex).trim();
+      } else {
+        return "";
+      }
+    } else {
+      // For normal text, check for double newline first
+      const doubleNewlineIndex = originalCleaned.indexOf("\n\n");
+      if (doubleNewlineIndex > 0) {
+        titleEndIndex = doubleNewlineIndex;
+        cleaned = originalCleaned.substring(titleEndIndex + 2).trim();
+      } else {
+        const punctuationMatch = originalCleaned.match(/[.!?]/);
+        if (punctuationMatch && punctuationMatch.index > 0) {
+          titleEndIndex = punctuationMatch.index + 1;
+          cleaned = originalCleaned.substring(titleEndIndex).trim();
+        } else {
+          const firstNewline = originalCleaned.indexOf("\n");
+          if (firstNewline > 0) {
+            titleEndIndex = firstNewline;
+            cleaned = originalCleaned.substring(titleEndIndex + 1).trim();
+          } else {
+            return "";
+          }
+        }
+      }
+    }
+
+    // Remove any leading punctuation, quotes, spaces, or attribution markers
+    cleaned = cleaned.replace(/^[""".,;:!?\s–—-]+/, "");
+
+    // Remove attribution if it starts with a dash and name
+    cleaned = cleaned.replace(/^[–—-]\s*[A-Z][^,\n]*,?\s*/, "");
+
+    if (!cleaned || cleaned.length <= maxLength) return cleaned;
+
+    // Look ahead for next punctuation mark within 50 chars after limit
+    const searchEnd = Math.min(cleaned.length, maxLength + 50);
+    const afterLimit = cleaned.substring(maxLength, searchEnd);
+    const punctuationMatch = afterLimit.match(/[.!?\n]/);
+
+    if (punctuationMatch) {
+      // Cut at the punctuation mark
+      const cutPoint = maxLength + punctuationMatch.index + 1;
+      return cleaned.substring(0, cutPoint).trim();
+    }
+
+    // No punctuation found nearby, truncate at word boundary without ellipsis
     const truncated = cleaned.substring(0, maxLength);
     const lastSpace = truncated.lastIndexOf(" ");
     return (
-      (lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated) + "..."
-    );
+      lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated
+    ).trim();
   }
 
   // Format ISO date to "17 Feb 2025" format
@@ -172,7 +324,12 @@ class InstagramFeed {
         const date = this.formatDate(item.timestamp);
         const likes = item.like_count || 0;
         const comments = item.comments_count || 0;
-        const imageUrl = this.escapeHtml(item.media_url);
+        // Use thumbnail_url for videos, media_url for images and carousels
+        const imageUrl = this.escapeHtml(
+          item.media_type === "VIDEO" && item.thumbnail_url
+            ? item.thumbnail_url
+            : item.media_url,
+        );
         const permalink = this.escapeHtml(item.permalink);
 
         return `
