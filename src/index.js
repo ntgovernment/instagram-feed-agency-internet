@@ -363,9 +363,10 @@ class InstagramFeed {
 
     // Convert #hashtags to Instagram tag search links
     // Negative lookbehind (?<!&) prevents matching HTML entities like &#039;
-    // Hashtags must start with a letter (not a number)
+    // Hashtags can start with a letter or number (e.g., #16days)
+    // Character class excludes semicolons to avoid matching HTML entities
     escaped = escaped.replace(
-      /(?<!&)#([a-zA-Z][a-zA-Z0-9_]*)\b/g,
+      /(?<!&)#([a-zA-Z0-9][a-zA-Z0-9_]*)\b/g,
       '<a href="https://instagram.com/explore/tags/$1" target="_blank" rel="noopener noreferrer">#$1</a>',
     );
 
