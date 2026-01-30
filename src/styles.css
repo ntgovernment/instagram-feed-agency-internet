@@ -127,7 +127,7 @@
 
 /* Body Section - Title and Description */
 .instagram-card__body {
-  padding: 24px 24px 4px 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -233,11 +233,7 @@
   }
 
   .instagram-card__body {
-    padding: 20px 20px 4px 20px;
-  }
-
-  .instagram-card__footer {
-    padding: 8px 20px 20px 20px;
+    padding: 20px;
   }
 
   .instagram-card__title {
@@ -265,11 +261,7 @@
   }
 
   .instagram-card__body {
-    padding: 16px 16px 4px 16px;
-  }
-
-  .instagram-card__footer {
-    padding: 8px 16px 16px 16px;
+    padding: 16px;
   }
 
   .instagram-card__date {

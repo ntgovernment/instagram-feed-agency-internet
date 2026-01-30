@@ -201,14 +201,6 @@ class InstagramFeed {
             <h3 class="instagram-card__title">${this.escapeHtml(title)}</h3>
             <p class="instagram-card__description">${this.escapeHtml(description)}</p>
           </div>
-          <div class="instagram-card__footer">
-            <a href="${permalink}" target="_blank" rel="noopener noreferrer" class="instagram-card__link">
-              <span class="instagram-card__link-text">Find out more</span>
-              <svg class="instagram-card__link-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.66667 3.33333L13.3333 8L8.66667 12.6667M12.6667 8H2.66667" stroke="#1F1F5F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
         </div>
       `;
       })
