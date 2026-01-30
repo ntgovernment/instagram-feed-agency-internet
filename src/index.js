@@ -310,17 +310,14 @@ class InstagramFeed {
         ${this.renderItems()}
       </div>
       <!-- Instagram Post Modal -->
-      <div class="modal fade instagram-modal" id="instagram-modal" tabindex="-1" role="dialog" aria-labelledby="instagram-modal-title" aria-hidden="true">
+      <div class="modal fade instagram-modal" id="instagram-modal" tabindex="-1" role="dialog" aria-modal="true" aria-describedby="modal-caption" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="instagram-modal-title">Instagram Post</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
             <div class="modal-body">
               <div class="instagram-modal__image-container">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modal-close-button">
+                  <span aria-hidden="true">&times;</span>
+                </button>
                 <img class="instagram-modal__image" src="" alt="Instagram post" id="modal-image">
               </div>
               <div class="instagram-modal__content">
@@ -418,10 +415,14 @@ class InstagramFeed {
 
   // Attach event listeners for interactive elements
   attachEventListeners() {
+    // Store reference to triggering element for focus return
+    this.lastFocusedElement = null;
+
     // Event delegation for title clicks
     this.container.addEventListener("click", (e) => {
       const title = e.target.closest(".instagram-card__title");
       if (title) {
+        this.lastFocusedElement = title;
         const postId = title.getAttribute("data-post-id");
         if (postId) {
           this.showPostModal(postId);
@@ -434,12 +435,49 @@ class InstagramFeed {
       const title = e.target.closest(".instagram-card__title");
       if (title && (e.key === "Enter" || e.key === " ")) {
         e.preventDefault();
+        this.lastFocusedElement = title;
         const postId = title.getAttribute("data-post-id");
         if (postId) {
           this.showPostModal(postId);
         }
       }
     });
+
+    // Focus trap for modal
+    const modal = document.getElementById("instagram-modal");
+    if (modal) {
+      modal.addEventListener("keydown", (e) => {
+        if (e.key !== "Tab") return;
+
+        const focusableElements = modal.querySelectorAll(
+          'button:not([disabled]), a[href]:not([disabled])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      });
+
+      // Return focus when modal closes
+      $(modal).on("hidden.bs.modal", () => {
+        if (this.lastFocusedElement) {
+          this.lastFocusedElement.focus();
+          this.lastFocusedElement = null;
+        }
+      });
+    }
   }
 
   // Show modal with post details
@@ -455,6 +493,9 @@ class InstagramFeed {
     const modal = document.getElementById("instagram-modal");
     const modalTitle = document.getElementById("instagram-modal-title");
     const modalImage = document.getElementById("modal-image");
+    const modalImageContainer = modal.querySelector(
+      ".instagram-modal__image-container",
+    );
     const modalLikes = document.getElementById("modal-likes");
     const modalComments = document.getElementById("modal-comments");
     const modalDate = document.getElementById("modal-date");
@@ -470,9 +511,13 @@ class InstagramFeed {
         ? post.thumbnail_url
         : post.media_url;
 
-    modalTitle.textContent = title;
+    if (modalTitle) modalTitle.textContent = title;
     modalImage.src = imageUrl;
     modalImage.alt = title;
+    // Set background image for blurred effect
+    if (modalImageContainer) {
+      modalImageContainer.style.backgroundImage = `url(${imageUrl})`;
+    }
     modalLikes.textContent = post.like_count || 0;
     modalComments.textContent = post.comments_count || 0;
     modalDate.textContent = this.formatDate(post.timestamp);
@@ -482,6 +527,14 @@ class InstagramFeed {
     // Show modal using Bootstrap's jQuery plugin
     if (typeof $ !== "undefined" && $.fn.modal) {
       $(modal).modal("show");
+      
+      // Set initial focus to close button when modal is shown
+      $(modal).on("shown.bs.modal", () => {
+        const closeButton = document.getElementById("modal-close-button");
+        if (closeButton) {
+          closeButton.focus();
+        }
+      });
     }
   }
 }
