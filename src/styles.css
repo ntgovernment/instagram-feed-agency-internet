@@ -146,6 +146,18 @@
   font-weight: 700;
   line-height: 24px;
   margin: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.instagram-card__title:hover {
+  color: #c33826;
+  text-decoration: underline;
+}
+
+.instagram-card__title:focus {
+  outline: 2px solid #c33826;
+  outline-offset: 2px;
 }
 
 .instagram-card__description {
@@ -266,5 +278,186 @@
 
   .instagram-card__date {
     align-self: flex-start;
+  }
+}
+
+/* Modal Styles */
+.instagram-modal .modal-dialog {
+  max-width: 800px;
+}
+
+.instagram-modal .modal-content {
+  border-radius: 0;
+  border: none;
+}
+
+.instagram-modal .modal-header {
+  border-bottom: 1px solid #d3d3d7;
+  padding: 24px;
+}
+
+.instagram-modal .modal-title {
+  color: #c33826;
+  font-size: 24px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.instagram-modal .modal-body {
+  padding: 0;
+}
+
+.instagram-modal__image-container {
+  width: 100%;
+  max-height: 500px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.instagram-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 500px;
+}
+
+.instagram-modal__content {
+  padding: 24px;
+}
+
+.instagram-modal__meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d3d3d7;
+}
+
+.instagram-modal__stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1f1e27;
+  font-size: 16px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.instagram-modal__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.instagram-modal__icon--comment {
+  transform: scaleX(-1);
+}
+
+.instagram-modal__date {
+  color: #8e8e8e;
+  font-size: 14px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  margin-left: auto;
+}
+
+.instagram-modal__caption {
+  color: #1f1e27;
+  font-size: 16px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0 0 24px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.instagram-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid #d3d3d7;
+}
+
+.instagram-modal__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #c33826;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+
+.instagram-modal__link:hover {
+  background-color: #a02d1f;
+  color: white;
+  text-decoration: none;
+}
+
+.instagram-modal__link-icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .instagram-modal .modal-dialog {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .instagram-modal__image-container {
+    max-height: 400px;
+  }
+
+  .instagram-modal__content {
+    padding: 16px;
+  }
+
+  .instagram-modal__meta {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .instagram-modal__date {
+    margin-left: 0;
+    width: 100%;
   }
 }
