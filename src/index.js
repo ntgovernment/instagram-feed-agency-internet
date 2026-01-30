@@ -20,6 +20,18 @@ class InstagramFeed {
     this.render();
   }
 
+  // Helper method to escape HTML to prevent XSS
+  escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text ? String(text).replace(/[&<>"']/g, m => map[m]) : '';
+  }
+
   render() {
     this.container.innerHTML = `
       <div class="instagram-feed-wrapper">
@@ -35,12 +47,18 @@ class InstagramFeed {
     if (this.feedData.length === 0) {
       return '<p class="instagram-feed-empty">No Instagram posts available</p>';
     }
-    return this.feedData.map(item => `
+    return this.feedData.map(item => {
+      const escapedCaption = this.escapeHtml(item.caption);
+      const escapedImage = this.escapeHtml(item.image);
+      const escapedAlt = this.escapeHtml(item.caption || 'Instagram post');
+      
+      return `
       <div class="instagram-feed-item">
-        <img src="${item.image}" alt="${item.caption || 'Instagram post'}" />
-        <div class="instagram-feed-caption">${item.caption || ''}</div>
+        <img src="${escapedImage}" alt="${escapedAlt}" />
+        <div class="instagram-feed-caption">${escapedCaption}</div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   updateFeed(newData) {
