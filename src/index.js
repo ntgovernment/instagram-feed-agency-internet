@@ -401,15 +401,11 @@ class InstagramFeed {
               <div class="instagram-modal__content">
                 <div class="instagram-modal__meta">
                   <span class="instagram-modal__stat">
-                    <svg class="instagram-modal__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#1F1F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <i class="far fa-heart instagram-modal__icon"></i>
                     <span id="modal-likes">0</span>
                   </span>
                   <span class="instagram-modal__stat">
-                    <svg class="instagram-modal__icon instagram-modal__icon--comment" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#1F1F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <i class="far fa-comment instagram-modal__icon instagram-modal__icon--comment"></i>
                     <span id="modal-comments">0</span>
                   </span>
                   <span class="instagram-modal__date" id="modal-date"></span>
@@ -420,11 +416,7 @@ class InstagramFeed {
             <div class="instagram-modal__footer">
               <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="modal-instagram-link">
                 View on Instagram
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <i class="fas fa-external-link-alt"></i>
               </a>
             </div>
           </div>
@@ -462,16 +454,12 @@ class InstagramFeed {
           <div class="instagram-card__header">
             <div class="instagram-card__engagement">
               <span class="instagram-card__stat">
-                <svg class="instagram-card__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#1F1F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="instagram-card__count">${likes}</span>
+                <i class="far fa-heart instagram-card__icon"></i>
+                ${likes > 0 ? `<span class="instagram-card__count">${likes}</span>` : ""}
               </span>
               <span class="instagram-card__stat">
-                <svg class="instagram-card__icon instagram-card__icon--comment" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#1F1F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="instagram-card__count">${comments}</span>
+                <i class="far fa-comment instagram-card__icon instagram-card__icon--comment"></i>
+                ${comments > 0 ? `<span class="instagram-card__count">${comments}</span>` : ""}
               </span>
             </div>
             <div class="instagram-card__date">${this.escapeHtml(date)}</div>
@@ -597,7 +585,9 @@ class InstagramFeed {
       modalImageContainer.style.backgroundImage = `url(${imageUrl})`;
     }
     modalLikes.textContent = post.like_count || 0;
+    modalLikes.style.display = (post.like_count || 0) > 0 ? "" : "none";
     modalComments.textContent = post.comments_count || 0;
+    modalComments.style.display = (post.comments_count || 0) > 0 ? "" : "none";
     modalDate.textContent = this.formatDate(post.timestamp);
     modalCaption.innerHTML = this.convertTextToLinks(post.caption || "");
     modalLink.href = post.permalink;
