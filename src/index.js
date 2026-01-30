@@ -330,6 +330,48 @@ class InstagramFeed {
     return `${day} ${month} ${year}`;
   }
 
+  // Convert URLs, @mentions, and #hashtags to clickable hyperlinks
+  convertTextToLinks(text) {
+    if (!text) return "";
+
+    // First, escape HTML to prevent XSS attacks
+    let escaped = this.escapeHtml(text);
+
+    // Convert URLs to links
+    // Matches URLs with or without protocol, including multi-level domains like youth.nt.gov.au
+    escaped = escaped.replace(
+      /(https?:\/\/[^\s<>"]+|(?:www\.)?[a-zA-Z0-9][-a-zA-Z0-9]*(?:\.[a-zA-Z0-9][-a-zA-Z0-9]*)+(?:\/[^\s<>"]*)?)/gi,
+      (url) => {
+        // Remove trailing punctuation that's likely not part of the URL
+        let cleanUrl = url.replace(/[.,;:!?)]$/, "");
+        let href = cleanUrl;
+
+        // Add protocol if missing
+        if (!cleanUrl.match(/^https?:\/\//i)) {
+          href = "https://" + cleanUrl;
+        }
+
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>${url.slice(cleanUrl.length)}`;
+      },
+    );
+
+    // Convert @mentions to Instagram profile links
+    escaped = escaped.replace(
+      /@([a-zA-Z0-9._]{1,30})\b/g,
+      '<a href="https://instagram.com/$1" target="_blank" rel="noopener noreferrer">@$1</a>',
+    );
+
+    // Convert #hashtags to Instagram tag search links
+    // Negative lookbehind (?<!&) prevents matching HTML entities like &#039;
+    // Hashtags must start with a letter (not a number)
+    escaped = escaped.replace(
+      /(?<!&)#([a-zA-Z][a-zA-Z0-9_]*)\b/g,
+      '<a href="https://instagram.com/explore/tags/$1" target="_blank" rel="noopener noreferrer">#$1</a>',
+    );
+
+    return escaped;
+  }
+
   // Get media type label for tag
   getMediaTypeLabel(mediaType) {
     const labels = {
@@ -557,7 +599,7 @@ class InstagramFeed {
     modalLikes.textContent = post.like_count || 0;
     modalComments.textContent = post.comments_count || 0;
     modalDate.textContent = this.formatDate(post.timestamp);
-    modalCaption.textContent = post.caption || "";
+    modalCaption.innerHTML = this.convertTextToLinks(post.caption || "");
     modalLink.href = post.permalink;
 
     // Show modal using Bootstrap's jQuery plugin

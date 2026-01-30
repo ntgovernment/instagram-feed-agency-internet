@@ -471,6 +471,27 @@
   word-wrap: break-word;
 }
 
+.instagram-modal__caption a {
+  color: var(--clr-link-default, #1f1f5f);
+  text-decoration: underline;
+  border-bottom: none;
+  font-weight: 400;
+  transition: color var(--transition-base, 0.2s ease);
+}
+
+.instagram-modal__caption a:hover {
+  color: var(--clr-action-hover, #c33826);
+  text-decoration: none;
+}
+
+.instagram-modal__caption a:focus {
+  background: var(--clr-focus-focus, #ec8c58);
+  border-bottom: 4px solid var(--clr-border-strong-01, #1f1f5f);
+  color: var(--clr-link-default, #1f1f5f);
+  text-decoration: none;
+  outline: none;
+}
+
 .instagram-modal__footer {
   display: flex;
   justify-content: flex-end;
