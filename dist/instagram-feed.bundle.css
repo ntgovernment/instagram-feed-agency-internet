@@ -1,4 +1,129 @@
 /**
+ * CSS Custom Properties (CSS Variables)
+ * Design System Variables for Instagram Feed Widget
+ */
+
+:root {
+  /* Brand Colors */
+  --dpsc-primary: #c33826;
+  --dpsc-primary-hover: #a72f1f;
+  --dpsc-primary-active: #8c2619;
+  --dpsc-primary-rgb: 195, 56, 38;
+  
+  --dpsc-text-primary: #1f1f5f;
+  --dpsc-text-dark: #1f1e27;
+  --dpsc-text-light: #8e8e8e;
+  
+  --dpsc-border: #d3d3d7;
+  --dpsc-background-light: #f0f0f0;
+  
+  /* Button Variables (Bootstrap 4 Compatible) */
+  --btn-primary-bg: var(--dpsc-primary);
+  --btn-primary-border: var(--dpsc-primary);
+  --btn-primary-color: #ffffff;
+  
+  --btn-primary-hover-bg: var(--dpsc-primary-hover);
+  --btn-primary-hover-border: var(--dpsc-primary-hover);
+  --btn-primary-hover-color: #ffffff;
+  
+  --btn-primary-active-bg: var(--dpsc-primary-active);
+  --btn-primary-active-border: var(--dpsc-primary-active);
+  --btn-primary-active-color: #ffffff;
+  
+  --btn-primary-focus-shadow: 0 0 0 0.2rem rgba(var(--dpsc-primary-rgb), 0.5);
+  --btn-disabled-opacity: 0.65;
+  
+  /* Typography */
+  --font-family-base: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  
+  /* Transitions */
+  --transition-base: 0.2s ease;
+}
+
+/**
+ * Button Customization
+ * Bootstrap 4 Compatible Button Theming with CSS Variables
+ */
+
+/* Scope customization to Instagram Feed widget to avoid conflicts */
+.instagram-feed .btn-primary,
+.instagram-modal .btn-primary {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+  color: var(--btn-primary-color);
+}
+
+.instagram-feed .btn-primary:hover,
+.instagram-modal .btn-primary:hover {
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-color);
+}
+
+.instagram-feed .btn-primary:focus,
+.instagram-feed .btn-primary.focus,
+.instagram-modal .btn-primary:focus,
+.instagram-modal .btn-primary.focus {
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-color);
+  box-shadow: var(--btn-primary-focus-shadow);
+}
+
+.instagram-feed .btn-primary:not(:disabled):not(.disabled):active,
+.instagram-feed .btn-primary:not(:disabled):not(.disabled).active,
+.instagram-feed .show > .btn-primary.dropdown-toggle,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled):active,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled).active,
+.instagram-modal .show > .btn-primary.dropdown-toggle {
+  background-color: var(--btn-primary-active-bg);
+  border-color: var(--btn-primary-active-border);
+  color: var(--btn-primary-active-color);
+}
+
+.instagram-feed .btn-primary:not(:disabled):not(.disabled):active:focus,
+.instagram-feed .btn-primary:not(:disabled):not(.disabled).active:focus,
+.instagram-feed .show > .btn-primary.dropdown-toggle:focus,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled):active:focus,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled).active:focus,
+.instagram-modal .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: var(--btn-primary-focus-shadow);
+}
+
+.instagram-feed .btn-primary:disabled,
+.instagram-feed .btn-primary.disabled,
+.instagram-modal .btn-primary:disabled,
+.instagram-modal .btn-primary.disabled {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+  opacity: var(--btn-disabled-opacity);
+}
+
+/* Additional button customization for improved spacing */
+.instagram-modal .btn-primary {
+  padding: 0.5rem 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-family-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Icon within button */
+.instagram-modal .btn-primary svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/**
  * Instagram Feed Styles for Agency Internet
  * Squiz Matrix Component Styles - Figma Design
  */
@@ -15,10 +140,10 @@
 /* Card Container */
 .instagram-card {
   background: white;
-  outline: 1px solid #d3d3d7;
+  outline: 1px solid var(--dpsc-border, #d3d3d7);
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow var(--transition-base, 0.2s ease);
 }
 
 .instagram-card:hover {
@@ -32,7 +157,7 @@
   padding-bottom: 56.25%; /* 16:9 aspect ratio */
   position: relative;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: var(--dpsc-background-light, #f0f0f0);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -67,18 +192,19 @@
 
 /* Header Section - Engagement and Date */
 .instagram-card__header {
-  padding: 24px 24px 4px 24px;
+  padding: var(--spacing-lg, 24px) var(--spacing-lg, 24px) 4px
+    var(--spacing-lg, 24px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: var(--spacing-md, 16px);
 }
 
 .instagram-card__engagement {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--spacing-md, 16px);
 }
 
 .instagram-card__stat {
@@ -98,28 +224,16 @@
 }
 
 .instagram-card__count {
-  color: #1f1e27;
+  color: var(--dpsc-text-dark, #1f1e27);
   font-size: 14px;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   line-height: 16px;
 }
 
 .instagram-card__date {
-  color: #1f1e27;
+  color: var(--dpsc-text-dark, #1f1e27);
   font-size: 14px;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   font-weight: 400;
   line-height: 20px;
   white-space: nowrap;
@@ -127,37 +241,37 @@
 
 /* Body Section - Title and Description */
 .instagram-card__body {
-  padding: 24px;
+  padding: var(--spacing-lg, 24px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-sm, 12px);
 }
 
 .instagram-card__title {
-  color: #1f1f5f;
+  color: var(--dpsc-text-primary, #1f1f5f);
   font-size: 20px;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   font-weight: 700;
   line-height: 24px;
   margin: 0;
+  cursor: pointer;
+  transition: color var(--transition-base, 0.2s ease);
+}
+
+.instagram-card__title:hover {
+  color: var(--dpsc-primary, #c33826);
+  text-decoration: underline;
+}
+
+.instagram-card__title:focus {
+  outline: 2px solid var(--dpsc-primary, #c33826);
+  outline-offset: 2px;
 }
 
 .instagram-card__description {
-  color: #1f1e27;
+  color: var(--dpsc-text-dark, #1f1e27);
   font-size: 16px;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   font-weight: 400;
   line-height: 24px;
   margin: 0;
@@ -165,19 +279,20 @@
 
 /* Footer Section - Link Button */
 .instagram-card__footer {
-  padding: 8px 24px 24px 24px;
+  padding: var(--spacing-xs, 8px) var(--spacing-lg, 24px)
+    var(--spacing-lg, 24px) var(--spacing-lg, 24px);
 }
 
 .instagram-card__link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 0;
+  gap: var(--spacing-xs, 8px);
+  padding: var(--spacing-xs, 8px) 0;
   text-decoration: none;
   background: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-base, 0.2s ease);
 }
 
 .instagram-card__link:hover {
@@ -185,15 +300,9 @@
 }
 
 .instagram-card__link-text {
-  color: #1f1f5f;
+  color: var(--dpsc-text-primary, #1f1f5f);
   font-size: 14px;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   font-weight: 700;
   line-height: 16px;
 }
@@ -208,16 +317,10 @@
 .instagram-feed-empty {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 40px 20px;
-  color: #8e8e8e;
+  padding: var(--spacing-xl, 40px) 20px;
+  color: var(--dpsc-text-light, #8e8e8e);
   font-size: 1.1rem;
-  font-family:
-    Lato,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
 }
 
 /* Responsive Design */
@@ -268,6 +371,161 @@
     align-self: flex-start;
   }
 }
+
+/* Modal Styles */
+.instagram-modal .modal-dialog {
+  max-width: 800px;
+}
+
+.instagram-modal .modal-content {
+  border-radius: 0;
+  border: none;
+}
+
+.instagram-modal .modal-header {
+  border-bottom: 1px solid var(--dpsc-border, #d3d3d7);
+  padding: var(--spacing-lg, 24px);
+}
+
+.instagram-modal .modal-title {
+  color: var(--dpsc-primary, #c33826);
+  font-size: 24px;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.instagram-modal .modal-body {
+  padding: 0;
+}
+
+.instagram-modal__image-container {
+  width: 100%;
+  max-height: 500px;
+  background-color: var(--dpsc-background-light, #f0f0f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.instagram-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 500px;
+}
+
+.instagram-modal__content {
+  padding: var(--spacing-lg, 24px);
+}
+
+.instagram-modal__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg, 24px);
+  margin-bottom: var(--spacing-md, 16px);
+  padding-bottom: var(--spacing-md, 16px);
+  border-bottom: 1px solid var(--dpsc-border, #d3d3d7);
+}
+
+.instagram-modal__stat {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 8px);
+  color: var(--dpsc-text-dark, #1f1e27);
+  font-size: 16px;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+.instagram-modal__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.instagram-modal__icon--comment {
+  transform: scaleX(-1);
+}
+
+.instagram-modal__date {
+  color: var(--dpsc-text-light, #8e8e8e);
+  font-size: 14px;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  margin-left: auto;
+}
+
+.instagram-modal__caption {
+  color: var(--dpsc-text-dark, #1f1e27);
+  font-size: 16px;
+  font-family: var(--font-family-base, Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0 0 var(--spacing-lg, 24px) 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.instagram-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-md, 16px) var(--spacing-lg, 24px);
+  border-top: 1px solid var(--dpsc-border, #d3d3d7);
+}
+
+@media (max-width: 768px) {
+  .instagram-modal .modal-dialog {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .instagram-modal__image-container {
+    max-height: 400px;
+  }
+
+  .instagram-modal__content {
+    padding: var(--spacing-md, 16px);
+  }
+
+  .instagram-modal__meta {
+    flex-wrap: wrap;
+    gap: var(--spacing-md, 16px);
+  }
+
+  .instagram-modal__date {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/**
+ * Main CSS Entry Point
+ * Modular CSS Architecture for Instagram Feed Widget
+ * 
+ * Import Order:
+ * 1. Variables - CSS Custom Properties
+ * 2. Button Customizations - Bootstrap 4 compatible
+ * 3. Component Styles - Instagram Feed & Modal
+ */
+
+/* 1. CSS Custom Properties */
+
+/* 2. Button Customization */
+
+/* 3. Instagram Feed Component Styles */
+
+/**
+ * Instagram Feed Widget - Main Stylesheet Entry Point
+ * 
+ * This file serves as the entry point for Webpack to bundle all modular CSS files.
+ * The actual styles are organized in the /styles directory for better maintainability.
+ * 
+ * Structure:
+ * - styles/variables.css: CSS custom properties for theming
+ * - styles/buttons.css: Bootstrap 4-compatible button customizations
+ * - styles/instagram-feed.css: Component-specific styles
+ * - styles/main.css: Imports all modular files
+ */
 
 
 /*# sourceMappingURL=instagram-feed.bundle.css.map*/

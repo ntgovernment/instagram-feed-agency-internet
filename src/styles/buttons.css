@@ -1,0 +1,75 @@
+/**
+ * Button Customization
+ * Bootstrap 4 Compatible Button Theming with CSS Variables
+ */
+
+/* Scope customization to Instagram Feed widget to avoid conflicts */
+.instagram-feed .btn-primary,
+.instagram-modal .btn-primary {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+  color: var(--btn-primary-color);
+}
+
+.instagram-feed .btn-primary:hover,
+.instagram-modal .btn-primary:hover {
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-color);
+}
+
+.instagram-feed .btn-primary:focus,
+.instagram-feed .btn-primary.focus,
+.instagram-modal .btn-primary:focus,
+.instagram-modal .btn-primary.focus {
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-color);
+  box-shadow: var(--btn-primary-focus-shadow);
+}
+
+.instagram-feed .btn-primary:not(:disabled):not(.disabled):active,
+.instagram-feed .btn-primary:not(:disabled):not(.disabled).active,
+.instagram-feed .show > .btn-primary.dropdown-toggle,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled):active,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled).active,
+.instagram-modal .show > .btn-primary.dropdown-toggle {
+  background-color: var(--btn-primary-active-bg);
+  border-color: var(--btn-primary-active-border);
+  color: var(--btn-primary-active-color);
+}
+
+.instagram-feed .btn-primary:not(:disabled):not(.disabled):active:focus,
+.instagram-feed .btn-primary:not(:disabled):not(.disabled).active:focus,
+.instagram-feed .show > .btn-primary.dropdown-toggle:focus,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled):active:focus,
+.instagram-modal .btn-primary:not(:disabled):not(.disabled).active:focus,
+.instagram-modal .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: var(--btn-primary-focus-shadow);
+}
+
+.instagram-feed .btn-primary:disabled,
+.instagram-feed .btn-primary.disabled,
+.instagram-modal .btn-primary:disabled,
+.instagram-modal .btn-primary.disabled {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+  opacity: var(--btn-disabled-opacity);
+}
+
+/* Additional button customization for improved spacing */
+.instagram-modal .btn-primary {
+  padding: 0.5rem 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-family-base);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Icon within button */
+.instagram-modal .btn-primary svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}

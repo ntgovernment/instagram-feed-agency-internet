@@ -1,0 +1,49 @@
+/**
+ * CSS Custom Properties (CSS Variables)
+ * Design System Variables for Instagram Feed Widget
+ */
+
+:root {
+  /* Brand Colors */
+  --dpsc-primary: #c33826;
+  --dpsc-primary-hover: #a72f1f;
+  --dpsc-primary-active: #8c2619;
+  --dpsc-primary-rgb: 195, 56, 38;
+
+  --dpsc-text-primary: #1f1f5f;
+  --dpsc-text-dark: #1f1e27;
+  --dpsc-text-light: #8e8e8e;
+
+  --dpsc-border: #d3d3d7;
+  --dpsc-background-light: #f0f0f0;
+
+  /* Button Variables (Bootstrap 4 Compatible) */
+  --btn-primary-bg: var(--dpsc-primary);
+  --btn-primary-border: var(--dpsc-primary);
+  --btn-primary-color: #ffffff;
+
+  --btn-primary-hover-bg: var(--dpsc-primary-hover);
+  --btn-primary-hover-border: var(--dpsc-primary-hover);
+  --btn-primary-hover-color: #ffffff;
+
+  --btn-primary-active-bg: var(--dpsc-primary-active);
+  --btn-primary-active-border: var(--dpsc-primary-active);
+  --btn-primary-active-color: #ffffff;
+
+  --btn-primary-focus-shadow: 0 0 0 0.2rem rgba(var(--dpsc-primary-rgb), 0.5);
+  --btn-disabled-opacity: 0.65;
+
+  /* Typography */
+  --font-family-base:
+    Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+
+  /* Transitions */
+  --transition-base: 0.2s ease;
+}
