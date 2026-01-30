@@ -4,6 +4,11 @@
  */
 
 /* Scope customization to Instagram Feed widget to avoid conflicts */
+.instagram-feed .btn,
+.instagram-modal .btn {
+  border-radius: var(--btn-radius);
+}
+
 .instagram-feed .btn-primary,
 .instagram-modal .btn-primary {
   background-color: var(--btn-primary-bg);
@@ -57,19 +62,23 @@
   opacity: var(--btn-disabled-opacity);
 }
 
-/* Additional button customization for improved spacing */
+/* Additional button customization - Figma Design Specifications */
 .instagram-modal .btn-primary {
-  padding: 0.5rem 1.5rem;
+  padding: 16px 24px;
   font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
   font-family: var(--font-family-base);
   display: inline-flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  overflow: hidden;
 }
 
-/* Icon within button */
+/* Icon within button - Figma specs (20px container) */
 .instagram-modal .btn-primary svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
