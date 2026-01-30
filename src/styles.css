@@ -1,77 +1,249 @@
 /**
  * Instagram Feed Styles for Agency Internet
- * Squiz Matrix Component Styles
+ * Squiz Matrix Component Styles - Figma Design
  */
 
-.instagram-feed-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-
-.instagram-feed-title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #262626;
-  text-align: center;
-}
-
+/* Grid Layout */
 .instagram-feed-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(353px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
 }
 
-.instagram-feed-item {
-  background: #ffffff;
-  border: 1px solid #dbdbdb;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Card Container */
+.instagram-card {
+  background: white;
+  outline: 1px solid #d3d3d7;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease;
 }
 
-.instagram-feed-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.instagram-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.instagram-feed-item img {
+/* Media Section - 16:9 Aspect Ratio */
+.instagram-card__media {
   width: 100%;
-  height: 300px;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  position: relative;
+  overflow: hidden;
+}
+
+.instagram-card__media img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.instagram-feed-caption {
-  padding: 15px;
-  font-size: 0.9rem;
-  color: #262626;
-  line-height: 1.4;
+/* Header Section - Tag and Date */
+.instagram-card__header {
+  padding: 24px 24px 4px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 45px;
 }
 
+.instagram-card__tag-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
+.instagram-card__tag {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 16px;
+  letter-spacing: 2px;
+  display: inline-block;
+}
+
+.instagram-card__tag--blue {
+  background: #e4f0f8;
+  color: #107cc0;
+}
+
+.instagram-card__date {
+  color: #1f1e27;
+  font-size: 14px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+/* Body Section - Title and Description */
+.instagram-card__body {
+  padding: 24px 24px 4px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.instagram-card__title {
+  color: #1f1f5f;
+  font-size: 20px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+}
+
+.instagram-card__description {
+  color: #1f1e27;
+  font-size: 16px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+}
+
+/* Footer Section - Link Button */
+.instagram-card__footer {
+  padding: 8px 24px 24px 24px;
+}
+
+.instagram-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.instagram-card__link:hover {
+  transform: translateX(4px);
+}
+
+.instagram-card__link-text {
+  color: #1f1f5f;
+  font-size: 14px;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.instagram-card__link-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Empty State */
 .instagram-feed-empty {
+  grid-column: 1 / -1;
   text-align: center;
   padding: 40px 20px;
   color: #8e8e8e;
   font-size: 1.1rem;
+  font-family:
+    Lato,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .instagram-feed-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
   }
 
-  .instagram-feed-title {
-    font-size: 1.5rem;
+  .instagram-card__header {
+    padding: 20px 20px 4px 20px;
+    gap: 20px;
+  }
+
+  .instagram-card__body {
+    padding: 20px 20px 4px 20px;
+  }
+
+  .instagram-card__footer {
+    padding: 8px 20px 20px 20px;
+  }
+
+  .instagram-card__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .instagram-card__description {
+    font-size: 15px;
+    line-height: 22px;
   }
 }
 
 @media (max-width: 480px) {
   .instagram-feed-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .instagram-card__header {
+    padding: 16px 16px 4px 16px;
+    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .instagram-card__body {
+    padding: 16px 16px 4px 16px;
+  }
+
+  .instagram-card__footer {
+    padding: 8px 16px 16px 16px;
+  }
+
+  .instagram-card__date {
+    align-self: flex-start;
   }
 }
