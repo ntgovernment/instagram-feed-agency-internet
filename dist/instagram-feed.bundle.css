@@ -12,6 +12,7 @@
 
   /* Action Colors (Figma Design System) */
   --clr-action-primary: #1f1f5f;
+  --clr-action-hover: #c33826;
   --clr-action-primary-hover: #2e2e85;
   --clr-action-primary-active: #181847;
   --clr-action-primary-rgb: 31, 31, 95;
@@ -24,13 +25,18 @@
   --dpsc-border: #d3d3d7;
   --dpsc-background-light: #f0f0f0;
 
+  /* Focus State Variables (Reusable for all components) */
+  --clr-focus: #ec8c58;
+  --focus-outline-width: 4px;
+  --focus-outline: 4px solid var(--clr-focus);
+
   /* Button Variables (Bootstrap 4 Compatible - Figma Design) */
   --btn-primary-bg: var(--clr-action-primary);
   --btn-primary-border: var(--clr-action-primary);
   --btn-primary-color: var(--clr-link-inverse);
 
-  --btn-primary-hover-bg: var(--clr-action-primary-hover);
-  --btn-primary-hover-border: var(--clr-action-primary-hover);
+  --btn-primary-hover-bg: var(--clr-action-hover);
+  --btn-primary-hover-border: var(--clr-action-hover);
   --btn-primary-hover-color: var(--clr-link-inverse);
 
   --btn-primary-active-bg: var(--clr-action-primary-active);
@@ -66,19 +72,37 @@
 .instagram-feed .btn,
 .instagram-modal .btn {
   border-radius: var(--btn-radius);
+  box-sizing: border-box;
+}
+
+.instagram-feed .btn:focus,
+.instagram-feed .btn.focus,
+.instagram-modal .btn:focus,
+.instagram-modal .btn.focus {
+  outline: var(--focus-outline);
 }
 
 .instagram-feed .btn-primary,
 .instagram-modal .btn-primary {
   background-color: var(--btn-primary-bg);
-  border-color: var(--btn-primary-border);
+  border: none;
   color: var(--btn-primary-color);
+  padding: 16px 24px;
+  padding-bottom: 16px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  font-family: var(--font-family-base);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
 }
 
 .instagram-feed .btn-primary:hover,
 .instagram-modal .btn-primary:hover {
   background-color: var(--btn-primary-hover-bg);
-  border-color: var(--btn-primary-hover-border);
   color: var(--btn-primary-hover-color);
 }
 
@@ -87,7 +111,6 @@
 .instagram-modal .btn-primary:focus,
 .instagram-modal .btn-primary.focus {
   background-color: var(--btn-primary-hover-bg);
-  border-color: var(--btn-primary-hover-border);
   color: var(--btn-primary-hover-color);
   box-shadow: var(--btn-primary-focus-shadow);
 }
@@ -99,7 +122,6 @@
 .instagram-modal .btn-primary:not(:disabled):not(.disabled).active,
 .instagram-modal .show > .btn-primary.dropdown-toggle {
   background-color: var(--btn-primary-active-bg);
-  border-color: var(--btn-primary-active-border);
   color: var(--btn-primary-active-color);
 }
 
@@ -117,23 +139,11 @@
 .instagram-modal .btn-primary:disabled,
 .instagram-modal .btn-primary.disabled {
   background-color: var(--btn-primary-bg);
-  border-color: var(--btn-primary-border);
   opacity: var(--btn-disabled-opacity);
 }
 
 /* Additional button customization - Figma Design Specifications */
-.instagram-modal .btn-primary {
-  padding: 16px 24px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 16px;
-  font-family: var(--font-family-base);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-}
+/* Layout properties moved to main .btn-primary declaration above for consistency */
 
 /* Icon within button - Figma specs (20px container) */
 .instagram-modal .btn-primary svg {

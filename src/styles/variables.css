@@ -12,6 +12,7 @@
 
   /* Action Colors (Figma Design System) */
   --clr-action-primary: #1f1f5f;
+  --clr-action-hover: #c33826;
   --clr-action-primary-hover: #2e2e85;
   --clr-action-primary-active: #181847;
   --clr-action-primary-rgb: 31, 31, 95;
@@ -24,13 +25,18 @@
   --dpsc-border: #d3d3d7;
   --dpsc-background-light: #f0f0f0;
 
+  /* Focus State Variables (Reusable for all components) */
+  --clr-focus: #ec8c58;
+  --focus-outline-width: 4px;
+  --focus-outline: 4px solid var(--clr-focus);
+
   /* Button Variables (Bootstrap 4 Compatible - Figma Design) */
   --btn-primary-bg: var(--clr-action-primary);
   --btn-primary-border: var(--clr-action-primary);
   --btn-primary-color: var(--clr-link-inverse);
 
-  --btn-primary-hover-bg: var(--clr-action-primary-hover);
-  --btn-primary-hover-border: var(--clr-action-primary-hover);
+  --btn-primary-hover-bg: var(--clr-action-hover);
+  --btn-primary-hover-border: var(--clr-action-hover);
   --btn-primary-hover-color: var(--clr-link-inverse);
 
   --btn-primary-active-bg: var(--clr-action-primary-active);
