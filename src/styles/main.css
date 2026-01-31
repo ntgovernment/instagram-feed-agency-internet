@@ -1,0 +1,18 @@
+/**
+ * Main CSS Entry Point
+ * Modular CSS Architecture for Instagram Feed Widget
+ * 
+ * Import Order:
+ * 1. Variables - CSS Custom Properties
+ * 2. Button Customizations - Bootstrap 4 compatible
+ * 3. Component Styles - Instagram Feed & Modal
+ */
+
+/* 1. CSS Custom Properties */
+@import "./variables.css";
+
+/* 2. Button Customization */
+@import "./buttons.css";
+
+/* 3. Instagram Feed Component Styles */
+@import "./instagram-feed.css";
